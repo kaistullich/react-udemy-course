@@ -22,7 +22,7 @@ class App extends Component {
 	 * Allows for 2-way data binding between input that was selected for each name
 	 * @param event
 	 */
-	nameChangedHandler = ( event, id ) => {
+	nameChangedHandler = (event, id) => {
 		// get the index for the person "selected"
 		const personIndex = this.state.persons.findIndex(p => p.id === id);
 
@@ -38,12 +38,12 @@ class App extends Component {
 		persons[personIndex] = person;
 
 		// set the new state
-		this.setState({ persons: persons });
+		this.setState({persons: persons});
 
-		console.log(`personIndex: ${personIndex}`);
-		console.log(`person: ${JSON.stringify(person, null, 2)}`);
-		console.log(`persons: ${JSON.stringify(persons, null, 2)}`);
-		console.log(`persons[personIndex]: ${JSON.stringify(persons[personIndex], null, 2)}`);
+		// console.log(`personIndex: ${personIndex}`);
+		// console.log(`person: ${JSON.stringify(person, null, 2)}`);
+		// console.log(`persons: ${JSON.stringify(persons, null, 2)}`);
+		// console.log(`persons[personIndex]: ${JSON.stringify(persons[personIndex], null, 2)}`);
 	};
 
 	/**
@@ -72,7 +72,8 @@ class App extends Component {
 	render() {
 
 		const style = {
-			backgroundColor: 'white',
+			backgroundColor: 'green',
+			color: 'white',
 			font: 'inherit',
 			border: '1px solid blue',
 			padding: '8px',
@@ -87,22 +88,33 @@ class App extends Component {
 			persons = (
 				<div>
 					{this.state.persons.map((person, index) => {
-							return <Person
-								name={person.name}
-								age={person.age}
-								click={() => this.deletePersonHandler(index)}
-								key={person.id}
-								changed={(event) => this.nameChangedHandler(event, person.id)}/>
-							}
-						)
-					}
+						return <Person
+							name={person.name}
+							age={person.age}
+							click={() => this.deletePersonHandler(index)}
+							key={person.id}
+							changed={(event) => this.nameChangedHandler(event, person.id)}/>
+					})}
 				</div>
-			)
+			);
+			style.backgroundColor = 'red';
+		}
+
+		// class names from the App.css
+		const classes = [];
+
+		// checks for dynamic css className
+		if (this.state.persons.length <= 2) {
+			classes.push('red'); // classes = ['red']
+		}
+		if (this.state.persons.length <= 1) {
+			classes.push('bold'); // classes = ['red', 'bold']
 		}
 
 		return (
 			<div className="App">
 				<h1>Hi I am a React app</h1>
+				<p className={classes.join(' ')}>This is really working!</p>
 				<button
 					style={style}
 					onClick={this.togglePersonsHandler}>Toggle Persons
